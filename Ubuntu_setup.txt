@@ -2,3 +2,16 @@ documents on setting up Ubuntu servers
 
 [FILL DETAILS]
 
+Server info 
+ - Manufacturer: HP
+ - Model No: 
+ 
+OS
+ - Ubuntu 14.04-1
+ 
+
+Installed packages
+ - openssh-server
+ - Matlab 2016b
+ - MKL 2017 update 1
+ 
