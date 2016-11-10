@@ -15,7 +15,7 @@ Installed packages
  - Matlab 2016b
  - MKL 2017 update 1
  
-
+[setup info]
 
 Before get start deeplearning, you need to downlord the newest version of Ubuntu.
 (in 2016.11.04, ubuntu 16.04.1 is the newest one.)
@@ -84,13 +84,6 @@ after using kill processor to save sources
 $ vncserver -kill:1
 
 4.Java
-add-apt-repository ppa:webupd8team/java
-apt-get update
-apt-get install oracle-java8-installer
-vi /etc/profile
-add below two lines at bottom of the list
-export JAVA_HOME="/usr/lib/jvm/java-8-oracle"
-source /etc/profile
 
 5.Tensorflow
 Tensorflow is one of tools for coding deeplearning based on python.
