@@ -15,3 +15,120 @@ Installed packages
  - Matlab 2016b
  - MKL 2017 update 1
  
+
+
+Before get start deeplearning, you need to downlord the newest version of Ubuntu.
+(in 2016.11.04, ubuntu 16.04.1 is the newest one.)
+Get the newest utuntu here :
+https://www.ubuntu.com/download/desktop
+
+1. SSH for server
+if you get done, to use remode control server, use ssh.
+$ sudo apt-get install opensshd-server
+and allow port to access your server
+$ sudo ufw allow 22/tcp
+$ sudo ufw allow 22/udp
+(+ root permission)
++if you want to work without typing sudo and password each time you install,
++set root password
+$ sudo passwd root
++and get permission
+$ su root
++but this is not recommanded way.
+
+2. File Transfer Protocol
+To use file transfer protocol,
+$ sudo apt-get install vsftpd
+
+3. VIM editor
+next we will use 'VIM editor' for edit file
+if you dont know its function or hot key,
+then go to :
+http://www.tldp.org/LDP/intro-linux/html/sect_06_02.html
+
+4.VNC service
+sometime, you are working in remote environment, you need to access
+graphic remoting. VNC (virtual Network Computing) service should work for you
+$ sudo apt-get install vnc4server xinetd
+to use tightvnc,
+$ sudo apt-get install tightvncsever
+
+to set password for accessing yourserver
+$ vncserver
+
+and set startup. edit like below codes.
+$vi ~/.vnc/xstartup
+------------------------------------------------------------------
+#!/bin/sh
+
+# Uncomment the following two lines for normal desktop:
+# unset SESSION_MANAGER
+# exec /etc/X11/xinit/xinitrc
+
+[ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup
+[ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources
+xsetroot -solid grey
+vncconfig -iconic &
+
+gnome-panel &
+gnome-settings-daemon &
+metacity &
+nautilus &
+gnome-terminal &
+x-terminal-emulator -geometry 80x24+10+10 -ls -title "$VNCDESKTOP Desktop" &
+x-window-manager &
+-------------------------------------------------
+VNC server port start from 5900.
+you can access with your ip:processor (maybe 1 or 2)
+after using kill processor to save sources
+$ vncserver -kill:1
+
+4.Java
+add-apt-repository ppa:webupd8team/java
+apt-get update
+apt-get install oracle-java8-installer
+vi /etc/profile
+add below two lines at bottom of the list
+export JAVA_HOME="/usr/lib/jvm/java-8-oracle"
+source /etc/profile
+
+5.Tensorflow
+Tensorflow is one of tools for coding deeplearning based on python.
+$ sudo apt-get install python-pip python-dev python-virtualenv
+$ virtualenv --system-site-packages ~/tensorflow
+$ source ~/tensorflow/bin/activate
+(tensorflow) $ pip install --upgrade https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-0.9.0-cp27-none-linux_x86_64.whl
+to get out of virtual environment,
+$ deactivate
+
+6.Caffe
+Caffe is one of tools for coding deeplearning based on C++
+$ sudo apt-get install curl git
+$ sudo apt-get upgrade
+$ sudo apt-get install --force-yes libprotobuf-dev libleveldb-dev libsnappy-dev libopencv-dev libboost-all-dev libhdf5-serial-dev protobuf-compiler gfortran libjpeg62
+$ git clone https://github.com/BVLC/caffe.git
+If you finished installing caffe, move to caffe root directory.
+cd caffe
+$ pip install --upgrade pip
+$ cat python/requirements.txt | xargs -L 1 sudo pip install
+$ for req in $(cat requirements.txt); do pip intstall $req; done
+Make Symbolic mark
+$ ln -s /usr/include/python2.7/ /usr/local/include/python2.7
+$ ln -s /usr/local/lib/python2.7/dist-packages/numpy/core/include/numpy /usr/local/include/python2.7/numpy
+$ sudo apt-get install python-scipy
+copy makefile
+$ cp Makefile.config.example Makefile.config
+it is basic setting of caffe. edit Makefile.config by your own taste.
+and if you get done,
+$ make pycaffe (linkage with python)
+	(if hdf5 error is emerged,)
+	$cd /usr/lib/x86-64-linux-gnu
+	$ln -s libhdf5_serial.so.8.0.2 libhdf5.so
+	$ln -s libhdf5_serial_hl.so.8.0.2 libhdf5_hl.so
+	(comeback to caffe root directory)
+	vi Makefile.config
+	edit like below codes.
+	INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include /usr/include/hdf5/serial/ 
+	LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib /usr/lib/x86_64-linux-gnu/hdf5/serial/
+$ make all
+$ make test
