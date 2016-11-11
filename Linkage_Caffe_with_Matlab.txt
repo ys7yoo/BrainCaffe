@@ -1,0 +1,15 @@
+[Linkage_caffe_with_Matlab]
+Before you read this, Make sure below.
+
+*Finish CAFFE constructing. (Check it works well. -> $make test)
+*Install Matlab in your Server.
+
+Download 'Makefile.config' & 'Makefile'. it is on our Brain Caffe repository
+and put them caffe root directory you use. 
+our Makefile.config and Makefile are already set done to link caffe and matlab in Ubuntu 16.04
+
+And execute below. (should work on your caffe root directory.)
+
+$make matcaffe
+
+All done. Now caffe's function is available on your matlab.
