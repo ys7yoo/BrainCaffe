@@ -84,6 +84,27 @@ after using kill processor to save sources
 $ vncserver -kill:1
 
 4.Java
+Check your java version. if it is printed, you dont need it.
+$ java -version
+but it will retrun "The program java can be found in the following packages" instead of saying its version.
+now we will get start install java.
+$ sudo apt-get install default-jre
+$ sudo apt-get install default-jdk
+And Following our department course, we will install oracle-JDK
+$ sudo apt-get install python-software-properties
+$ sudo add-apt-repository ppa:webupd8team/java
+$ sudo apt-get update
+$ sudo apt-get install oracle-java8-installer
+To set the JAVA_HOME environment variable, which is needed for some programs, first find out the path of your Java installation.
+$ sudo update-alternatives --config java
+Check your java home directory, and Copy the path from your preferred installation and then edit the file /etc/environment
+$ sudo nano /etc/environment or $ sudo vi /etc/environment
++JAVA_HOME="YOUR_PATH"
+To apply your setting, reload this file.
+$ source /etc/environment
+Test it
+$ echo $JAVA_HOME
+If it returns the just set path, the environment variable has been set successfully.
 
 5.Tensorflow
 Tensorflow is one of tools for coding deeplearning based on python.
