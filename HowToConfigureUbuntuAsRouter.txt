@@ -1,0 +1,45 @@
+First, you need to prepare Server Computor as router and other guest coms.
+We will configure closed network.
+In ours, we use Ubuntu 16.04 LTS for Server one and others too for slaves
+(There is not to do in slaves. just make sure wire connectings each other.)
+
+The master info (using as router)
+enp0s25 address 203.249.88.241
+        netmask 255.255.255.0
+        gateway 203.249.88.254
+        
+enp32s0 address 192.168.0.1
+        netmask 255.255.255.0
+        
+To set static ip, we need to set network interface
+and add below lines into file bottom
+$ sudo vi /etc/network/interfaces
+ 
++auto enp32s0
++iface enp32s0 inet static
++address 192.168.0.1
++netmask 255.255.255.0
+
+and apply what you set, restart network.
+$ service networking restart
+or
+$ sudo /etc/init.d/networking restart
+it goes same thing.
+
+Now, we gonna do IPRouting! 
+we need to uncomment below line to use iprouting.
+
+$ sudo vi /etc/sysctl.conf
+
+ 28 net.ipv4.ip_forward=1     (Make it avtivate)
+Finshed, save and out.
+
+Then, to enable IP masquerading, enter following set of commands.
+$ sudo iptables -t nat -A POSTROUTING -o enp0s25 -j MASQUERADE
+$ sudo iptables -A FORWARD -i enp32s0 -o enp0s25 -m state --state RELATED,ESTABLISHED -j ACCEPT
+$ sudo iptables -A FORWARD -i enp0s25 -o enp32s0 -j ACCEPT
+
+Restart Your Network.
+
+Now You have just done configuring master as router.
+Enjoy!
