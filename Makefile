@@ -185,7 +185,7 @@ ifeq ($(UNAME), Linux)
     # remove protobuf (bug fix from https://github.com/BVLC/caffe/issues/1917)  (2016.11.24)
     LIBRARIES += glog gflags boost_system boost_filesystem m hdf5_serial_hl hdf5_serial    
     # protobuf is added to LDFLAG (bug fix from https://github.com/BVLC/caffe/issues/1917)  (2016.11.24)
-    LDFLAGS += -Wl,-Bstatic -lprotobuf -Wl,-Bdynamic -fPIC
+    LDFLAGS += -Wl,-Bstatic -lprotobuf.a -Wl,-Bdynamic
 
 endif
 
