@@ -183,17 +183,19 @@ ifeq ($(UNAME), Linux)
     #LIBRARIES += glog gflags protobuf boost_system boost_filesystem m hdf5_hl hdf5
     #LIBRARIES += glog gflags protobuf boost_system boost_filesystem m hdf5_serial_hl hdf5_serial
     # remove protobuf (bug fix from https://github.com/BVLC/caffe/issues/1917)  (2016.11.24)
-    LIBRARIES += glog gflags boost_system boost_filesystem m hdf5_serial_hl hdf5_serial
+    LIBRARIES += glog gflags boost_system boost_filesystem m hdf5_serial_hl hdf5_serial    
+    # protobuf is added to LDFLAG (bug fix from https://github.com/BVLC/caffe/issues/1917)  (2016.11.24)
+    LDFLAGS += -Wl,-Bstatic -lprotobuf -Wl,-Bdynamic -fPIC
+
 endif
 
 ifeq ($(UNAME), Darwin)
-    # LIBRARIES += glog gflags protobuf boost_system-mt boost_filesystem-mt m hdf5_hl hdf5
+    LIBRARIES += glog gflags protobuf boost_system-mt boost_filesystem-mt m hdf5_hl hdf5
     # remove protobuf (bug fix from https://github.com/BVLC/caffe/issues/1917)  (2016.11.24)  
-    LIBRARIES += glog gflags boost_system-mt boost_filesystem-mt m hdf5_hl hdf5
+    # LIBRARIES += glog gflags boost_system-mt boost_filesystem-mt m hdf5_hl hdf5
 endif
 
-# protobuf is added to LDFLAG (bug fix from https://github.com/BVLC/caffe/issues/1917)  (2016.11.24)
-LDFLAGS += -Wl,-Bstatic -lprotobuf -Wl,-Bdynamic
+
 
 # handle IO dependencies
 USE_LEVELDB ?= 1
