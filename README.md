@@ -15,5 +15,6 @@ Step 1. Get Caffe code:
   - Option 2. Get the latest master version.
 
 Step 2. Use these Makefile and Makefile.conf to build a Caffe.
-
+  - run "./cprc3.sh" to copy those files to ../caffe-rc3
+  
 Then, enjoy!
