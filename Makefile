@@ -314,7 +314,7 @@ ifeq ($(OSX), 1)
 	LDFLAGS += -Wl,-rpath,/opt/intel/mkl/lib
 
 	# may need this to fix iconv2 issue (2016.11.25)
-        LDFLAGS += -Wl,-rpath,/usr/lib/
+        LDFLAGS += -Wl,-rpath,/usr/lib
 	
 	# for leveldb
         LDFLAGS += -Wl,-rpath,/opt/local/lib
