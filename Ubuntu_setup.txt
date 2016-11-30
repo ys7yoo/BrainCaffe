@@ -83,7 +83,7 @@ you can access with your ip:processor (maybe 1 or 2)
 after using kill processor to save sources
 $ vncserver -kill:1
 
-4.Java
+5.Java
 Check your java version. if it is printed, you dont need it.
 $ java -version
 but it will retrun "The program java can be found in the following packages" instead of saying its version.
@@ -106,20 +106,12 @@ Test it
 $ echo $JAVA_HOME
 If it returns the just set path, the environment variable has been set successfully.
 
-5.Tensorflow
-Tensorflow is one of tools for coding deeplearning based on python.
-$ sudo apt-get install python-pip python-dev python-virtualenv
-$ virtualenv --system-site-packages ~/tensorflow
-$ source ~/tensorflow/bin/activate
-(tensorflow) $ pip install --upgrade https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-0.9.0-cp27-none-linux_x86_64.whl
-to get out of virtual environment,
-$ deactivate
-
 6.Caffe
 Caffe is one of tools for coding deeplearning based on C++
 $ sudo apt-get install curl git
 $ sudo apt-get upgrade
-$ sudo apt-get install --force-yes libprotobuf-dev libleveldb-dev libsnappy-dev libopencv-dev libboost-all-dev libhdf5-serial-dev protobuf-compiler gfortran libjpeg62
+$ sudo apt-get install -y python-pip python-dev python-virtualenv
+$ sudo apt-get install -y libprotobuf-dev libleveldb-dev libsnappy-dev libopencv-dev libboost-all-dev libhdf5-serial-dev protobuf-compiler gfortran libjpeg62 libfreeimage-dev libatlas-base-dev git python-dev python-pip libgoogle-glog-dev libbz2-dev libxml2-dev libxslt1-dev libffi-dev libssl-dev libgflags-dev liblmdb-dev
 $ git clone https://github.com/BVLC/caffe.git
 If you finished installing caffe, move to caffe root directory.
 cd caffe
@@ -130,13 +122,18 @@ Make Symbolic mark
 $ ln -s /usr/include/python2.7/ /usr/local/include/python2.7
 $ ln -s /usr/local/lib/python2.7/dist-packages/numpy/core/include/numpy /usr/local/include/python2.7/numpy
 $ sudo apt-get install python-scipy
-copy makefile
+copy makefile.config
 $ cp Makefile.config.example Makefile.config
-it is basic setting of caffe. edit Makefile.config by your own taste.
-and if you get done,
+
+I uploaded the basic setting for clear Caffe user.
+go download "Makefile.config.basicsetting"
+and put it in caffe root directory with deleting ".basicsetting".
+(it was worked well on our lab server)
+
 $ make pycaffe (linkage with python)
-	(if hdf5 error is emerged,)
-	$cd /usr/lib/x86-64-linux-gnu
+
+	(if hdf5 error is emerged,) 
+	$cd /usr/lib/x86_64-linux-gnu
 	$ln -s libhdf5_serial.so.8.0.2 libhdf5.so
 	$ln -s libhdf5_serial_hl.so.8.0.2 libhdf5_hl.so
 	(comeback to caffe root directory)
@@ -144,5 +141,24 @@ $ make pycaffe (linkage with python)
 	edit like below codes.
 	INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include /usr/include/hdf5/serial/ 
 	LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib /usr/lib/x86_64-linux-gnu/hdf5/serial/
+	
+	(if "fatal error: gflags/gflags.h:No such file or directory" is emerged)
+	$ wget https://github.com/schuhschuh/gflags/archive/master.zip
+	$ unzip master.zip
+	$ cd gflags-master
+	$ mkdir build && cd build
+	$ export CXXFLAGS="-fPIC" && cmake .. && make VERBOSE=1
+	$ make
+	$ sudo make install
+	$ make all
+	$ make test
+	
+	(if "ImportError: No module named google.protobuf.internal" is emerged)
+	$ pip install protobuf
+
+	(if "ImportError: No module named skimage" is emerged)
+	$ pip install scikit-image
+	
 $ make all
 $ make test
+Now You can Enjoy Your Clean Caffe!
