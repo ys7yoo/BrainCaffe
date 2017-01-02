@@ -1,0 +1,14 @@
+net: "MyWork/MNIST/MNIST_LeNet.prototxt"
+test_iter: 100
+test_interval: 500
+base_lr: 0.01
+momentum: 0.9
+weight_decay: 0.0005
+lr_policy: "inv"
+gamma: 0.0001
+power: 0.75
+display: 50
+max_iter: 5000
+snapshot: 2500
+snapshot_prefix: "MyWork/MNIST/MNIST"
+solver_mode: CPU
