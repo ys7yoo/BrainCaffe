@@ -180,8 +180,19 @@ endif
 
 
 ifeq ($(UNAME), Linux)
-    #LIBRARIES += glog gflags protobuf boost_system boost_filesystem m hdf5_hl hdf5
-    LIBRARIES += glog gflags protobuf boost_system boost_filesystem m hdf5_serial_hl hdf5_serial
+    # get OS release
+    OS_RELEASE:=$(lsb_release -r | awk -F':' '{ print $2 }' | awk '{ gsub ("\t", "", $0); print}' | awk -F'.' '{ print $1 }')
+    ifeq ($(OS_RELEASE), 14)
+        # This works for 14.04
+        # hdf5 libraries are in /usr/lib/x86_64-linux-gnu
+        LIBRARIES += glog gflags protobuf boost_system boost_filesystem m hdf5_hl hdf5
+    endif 
+
+    ifeq ($(OS_RELEASE), 16)
+        # This works for 16.04
+        LIBRARIES += glog gflags protobuf boost_system boost_filesystem m hdf5_serial_hl hdf5_serial
+    endif
+
 
     # tried the following fix. But, does not work...
     # remove protobuf (bug fix from https://github.com/BVLC/caffe/issues/1917)  (2016.11.24)
