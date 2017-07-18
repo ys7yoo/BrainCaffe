@@ -181,14 +181,18 @@ endif
 
 ifeq ($(UNAME), Linux)
     # get OS release
-    OS_RELEASE:=$(lsb_release -r | awk -F':' '{ print $2 }' | awk '{ gsub ("\t", "", $0); print}' | awk -F'.' '{ print $1 }')
+    $(info try to get OS release…)
+    OS_RELEASE:=$(shell lsb_release -r | awk -F':' '{ print $$2 }' | awk '{ gsub ("\t", "", $$0); print}' | awk -F'.' '{ print $$1 }')
+    $(info release $(OS_RELEASE) detected)
     ifeq ($(OS_RELEASE), 14)
+        # $(info Release 14 detecte')
         # This works for 14.04
         # hdf5 libraries are in /usr/lib/x86_64-linux-gnu
         LIBRARIES += glog gflags protobuf boost_system boost_filesystem m hdf5_hl hdf5
     endif 
 
     ifeq ($(OS_RELEASE), 16)
+        $ $(info Release 16 detected)
         # This works for 16.04
         LIBRARIES += glog gflags protobuf boost_system boost_filesystem m hdf5_serial_hl hdf5_serial
     endif
