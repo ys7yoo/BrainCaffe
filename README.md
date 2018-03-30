@@ -12,6 +12,11 @@ Step 0. Install required libraries
       ```bash
       sudo apt install libopenblas-dev
       ```
+    - install gflags
+      On OSX,
+      ```
+      sudo port install gflags
+      ```
     - install glog from https://github.com/google/glog/releases/tag/v0.3.4  => done by running external.sh in external folder
   - Matlab may be very useful with MatCaffe!
   - See [Ubuntu_setup.txt](./Ubuntu_setup.txt) for detail info on setting Ubuntu servers
